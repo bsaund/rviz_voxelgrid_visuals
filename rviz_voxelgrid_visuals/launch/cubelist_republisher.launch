@@ -1,0 +1,33 @@
+<launch>
+
+  <node name="gt_republisher" pkg="mps_shape_completion_visualization" type="cubelist_republisher_node.py">
+    <remap from="demo_voxel_grid" to="gt_voxel_grid"/>
+    <remap from="shape_completion_marker" to="gt_marker"/>
+    <param name="r" value=".3"/>
+    <param name="g" value=".6"/>
+    <param name="b" value=".3"/>
+    <param name="a" value=".3"/>
+  </node>
+
+  <node name="occ_input_republisher" pkg="mps_shape_completion_visualization"
+        type="cubelist_republisher_node.py">
+    <remap from="demo_voxel_grid" to="occ_input_voxel_grid"/>
+    <remap from="shape_completion_marker" to="occ_input_marker"/>
+    <param name="r" value=".7"/>
+    <param name="g" value=".7"/>
+    <param name="b" value=".7"/>
+  </node>
+
+  <node name="prediction_republisher" pkg="mps_shape_completion_visualization"
+        type="cubelist_republisher_node.py">
+    <remap from="demo_voxel_grid" to="predicted_voxel_grid"/>
+    <remap from="shape_completion_marker" to="predicted_marker"/>
+    <param name="r" value=".3"/>
+    <param name="g" value=".3"/>
+    <param name="b" value=".7"/>
+    <param name="a" value=".5"/>
+  </node>
+
+
+
+</launch>
