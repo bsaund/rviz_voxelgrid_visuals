@@ -7,7 +7,9 @@ from std_msgs.msg import Float32MultiArray, MultiArrayDimension
 import numpy as np
 
 
-def vox_to_float_array(voxel_grid, dim):
+def vox_to_float_array(voxel_grid, dim=None):
+    if dim is None:
+        dim = voxel_grid.shape[0]
     out_msg = Float32MultiArray()
     out_msg.data = voxel_grid.astype(np.float32).flatten().tolist()
     out_msg.layout.dim.append(MultiArrayDimension(label='x', size=dim, stride=dim*dim*dim))
@@ -20,7 +22,15 @@ def msg_to_vox(msg):
     return np.reshape(msg.data, tuple(d.size for d in msg.layout.dim))
 
 
-def vox_to_voxelgrid_stamped(voxel_grid, dim, scale, frame_id, origin=(0,0,0)):
+def vox_to_voxelgrid_stamped(voxel_grid, scale, frame_id, dim=None, origin=(0,0,0)):
+    """
+    @param voxel_grid: 3D Cubic Voxelgrid in either numpy or tensorflow
+    @param scale: side dimension of each voxel
+    @param frame_id: name of frame of voxelgrid
+    @param dim: dimension of voxelgrid (optional, will be inferred if possible)
+    @param origin: origin of the voxelgrid in the frame from lower, bottom, left voxel
+    @return:
+    """
     msg = VoxelgridStamped()
     msg.header.frame_id = frame_id
     msg.occupancy = vox_to_float_array(voxel_grid, dim)
@@ -31,9 +41,9 @@ def vox_to_voxelgrid_stamped(voxel_grid, dim, scale, frame_id, origin=(0,0,0)):
     return msg
 
 
-
 def voxelgrid_stamped_to_cubelist(occupancy_msg, color):
     """
+    "Deprecated. Use RViz plugin and voxelgrid_stamped messages
     Takes an OccumancyStamped message with optional color and return a ros Marker as a cubelist
     INPUT: occupancy_msg: DATATYPE: VoxelgridStamped
     INPUT: color: DATATYPE: std_msgs.msg.ColorRGBA
