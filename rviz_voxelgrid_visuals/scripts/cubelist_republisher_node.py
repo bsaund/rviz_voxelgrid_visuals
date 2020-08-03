@@ -10,12 +10,12 @@ It looks for "base_frame" and "scale", and "r/g/b/a" parameters, otherwise uses 
 
 import rospy
 import numpy as np
-from mps_shape_completion_visualization.conversions import occupancyStamped_to_cubelist
+from rviz_voxelgrid_visuals.conversions import VoxelgridStamped_to_cubelist
 from visualization_msgs.msg import Marker, MarkerArray
 from std_msgs.msg import ColorRGBA
 from rospy.numpy_msg import numpy_msg
 from std_msgs.msg import Float32MultiArray, MultiArrayDimension
-from mps_shape_completion_msgs.msg import OccupancyStamped
+from rviz_voxelgrid_visuals_msgs.msg import VoxelgridStamped
 
 
 
@@ -27,13 +27,13 @@ def callback(msg):
     color.g = rospy.get_param('~g', np.random.random())
     color.b = rospy.get_param('~b', np.random.random())
 
-    occ_stamped = OccupancyStamped();
+    occ_stamped = VoxelgridStamped();
     occ_stamped.occupancy = msg
     occ_stamped.header.frame_id = rospy.get_param('~frame_id', "base_frame")
     occ_stamped.header.stamp = rospy.get_rostime()
     occ_stamped.scale = rospy.get_param('~scale', 0.01)
     
-    pub.publish(occupancyStamped_to_cubelist(occ_stamped, color))
+    pub.publish(VoxelgridStamped_to_cubelist(occ_stamped, color))
     
 
 if __name__ == "__main__":

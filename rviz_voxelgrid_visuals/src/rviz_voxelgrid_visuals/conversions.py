@@ -1,5 +1,5 @@
 # import rospy
-from mps_shape_completion_msgs.msg import OccupancyStamped
+from rviz_voxelgrid_visuals_msgs.msg import VoxelgridStamped
 from visualization_msgs.msg import Marker, MarkerArray
 from geometry_msgs.msg import Point
 from std_msgs.msg import ColorRGBA
@@ -20,8 +20,8 @@ def msg_to_vox(msg):
     return np.reshape(msg.data, tuple(d.size for d in msg.layout.dim))
 
 
-def vox_to_occupancy_stamped(voxel_grid, dim, scale, frame_id, origin=(0,0,0)):
-    msg = OccupancyStamped()
+def vox_to_voxelgrid_stamped(voxel_grid, dim, scale, frame_id, origin=(0,0,0)):
+    msg = VoxelgridStamped()
     msg.header.frame_id = frame_id
     msg.occupancy = vox_to_float_array(voxel_grid, dim)
     msg.scale = scale
@@ -32,10 +32,10 @@ def vox_to_occupancy_stamped(voxel_grid, dim, scale, frame_id, origin=(0,0,0)):
 
 
 
-def occupancyStamped_to_cubelist(occupancy_msg, color):
+def voxelgrid_stamped_to_cubelist(occupancy_msg, color):
     """
     Takes an OccumancyStamped message with optional color and return a ros Marker as a cubelist
-    INPUT: occupancy_msg: DATATYPE: OccupancyStamped
+    INPUT: occupancy_msg: DATATYPE: VoxelgridStamped
     INPUT: color: DATATYPE: std_msgs.msg.ColorRGBA
     OUTPUT: visualization_msgs.msg.Marker
     """

@@ -1,7 +1,7 @@
 #ifndef VOXEL_VISUAL_H
 #define VOXEL_VISUAL_H
 
-#include <mps_shape_completion_msgs/OccupancyStamped.h>
+#include <rviz_voxelgrid_visuals_msgs/VoxelgridStamped.h>
 
 
 namespace Ogre
@@ -15,7 +15,7 @@ namespace rviz
 class PointCloud;
 }
 
-namespace mps_shape_completion_visualization
+namespace rviz_voxelgrid_visuals
 {
 
 class VoxelGridVisual
@@ -29,7 +29,7 @@ public:
   virtual ~VoxelGridVisual();
 
   // Configure the visual to show the data in the message.
-  void setMessage( const mps_shape_completion_msgs::OccupancyStamped::ConstPtr& msg);
+  void setMessage( const rviz_voxelgrid_visuals_msgs::VoxelgridStamped::ConstPtr& msg);
 
   void setFramePosition( const Ogre::Vector3& position );
   void setFrameOrientation( const Ogre::Quaternion& orientation );
@@ -52,7 +52,7 @@ private:
 
   // A local copy of the message is stored so that the voxelgrid can be
   // regenerated if the user changes the input
-  mps_shape_completion_msgs::OccupancyStamped latest_msg;
+  rviz_voxelgrid_visuals_msgs::VoxelgridStamped latest_msg;
   
   // The visible voxel grid ogre object
   boost::shared_ptr<rviz::PointCloud> voxel_grid_;
@@ -72,6 +72,6 @@ private:
   
 };
 
-} // end namespace mps_shape_completion_visualization
+} // end namespace rviz_voxelgrid_visuals
 
 #endif // VOXEL_VISUAL_H

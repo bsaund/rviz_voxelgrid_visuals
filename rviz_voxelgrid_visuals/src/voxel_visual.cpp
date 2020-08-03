@@ -7,7 +7,7 @@
 
 #include "voxel_visual.h"
 
-namespace mps_shape_completion_visualization
+namespace rviz_voxelgrid_visuals
 {
 
 // BEGIN_TUTORIAL
@@ -29,12 +29,12 @@ namespace mps_shape_completion_visualization
 
     void VoxelGridVisual::reset()
     {
-        latest_msg = mps_shape_completion_msgs::OccupancyStamped();
+        latest_msg = rviz_voxelgrid_visuals_msgs::VoxelgridStamped();
         voxel_grid_->clear();
     }
 
 
-    void VoxelGridVisual::setMessage( const mps_shape_completion_msgs::OccupancyStamped::ConstPtr& msg)
+    void VoxelGridVisual::setMessage( const rviz_voxelgrid_visuals_msgs::VoxelgridStamped::ConstPtr& msg)
     {
         latest_msg = *msg;
         updatePointCloud();
@@ -139,4 +139,4 @@ namespace mps_shape_completion_visualization
         hidden_ = hidden;
     }
 
-} // end namespace mps_shape_completion_visualization
+} // end namespace rviz_voxelgrid_visuals

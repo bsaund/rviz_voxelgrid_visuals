@@ -2,8 +2,8 @@
 Method for publishing a voxelgrid to rviz. Not fast or efficient, but simple to use
 """
 import rospy
-from mps_shape_completion_msgs.msg import OccupancyStamped
-import mps_shape_completion_visualization.conversions as conversions
+from rviz_voxelgrid_visuals_msgs.msg import VoxelgridStamped
+import rviz_voxelgrid_visuals.conversions as conversions
 import tf2_ros
 import tf_conversions
 import geometry_msgs.msg
@@ -16,7 +16,7 @@ def publish_voxelgrid(vg, topic="voxelgrid", scale=0.01, frame_id="object"):
     @param scale:
     @return:
     """
-    pub = rospy.Publisher(topic, OccupancyStamped, queue_size=1)
+    pub = rospy.Publisher(topic, VoxelgridStamped, queue_size=1)
     i = 0
     while pub.get_num_connections() == 0:
         i += 1

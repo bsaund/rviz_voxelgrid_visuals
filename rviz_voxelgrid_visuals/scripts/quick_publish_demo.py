@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 import numpy as np
-from mps_shape_completion_visualization.quick_publish import publish_voxelgrid, publish_object_transform
+from rviz_voxelgrid_visuals.quick_publish import publish_voxelgrid, publish_object_transform
 
 if __name__ == "__main__":
     """

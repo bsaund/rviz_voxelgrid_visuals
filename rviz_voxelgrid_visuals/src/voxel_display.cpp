@@ -12,7 +12,7 @@
 #include "voxel_visual.h"
 #include "voxel_display.h"
 
-namespace mps_shape_completion_visualization
+namespace rviz_voxelgrid_visuals
 {
 
 // The constructor must have no arguments, so we can't give the
@@ -83,7 +83,7 @@ namespace mps_shape_completion_visualization
     }
 
 
-    void VoxelGridDisplay::processMessage( const mps_shape_completion_msgs::OccupancyStamped::ConstPtr& msg)
+    void VoxelGridDisplay::processMessage( const rviz_voxelgrid_visuals_msgs::VoxelgridStamped::ConstPtr& msg)
     {
         // Here we call the rviz::FrameManager to get the transform from the
         // fixed frame to the frame in the header of this Imu message.  If
@@ -105,11 +105,11 @@ namespace mps_shape_completion_visualization
         visual_->setFramePosition( position );
         visual_->setFrameOrientation( orientation );
     }
-} // end namespace mps_shape_completion_visualization
+} // end namespace rviz_voxelgrid_visuals
 
 
 // Tell pluginlib about this class.  It is important to do this in
 // global scope, outside our package's namespace.
 #include <pluginlib/class_list_macros.h>
-PLUGINLIB_EXPORT_CLASS(mps_shape_completion_visualization::VoxelGridDisplay, rviz::Display )
+PLUGINLIB_EXPORT_CLASS(rviz_voxelgrid_visuals::VoxelGridDisplay, rviz::Display )
 

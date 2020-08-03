@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(mps_shape_completion_visualization)
+project(rviz_voxelgrid_visuals)
 
 add_compile_options(-std=c++14)
 
 find_package(catkin REQUIRED
-  mps_shape_completion_msgs
+  rviz_voxelgrid_visuals_msgs
   rviz
   roscpp)
 
@@ -32,7 +32,7 @@ catkin_python_setup()
 ###################################
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES mps_shape_completion_visualization
+#  LIBRARIES rviz_voxelgrid_visuals
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )

@@ -3,7 +3,7 @@
 
 #include <boost/circular_buffer.hpp>
 
-#include <mps_shape_completion_msgs/OccupancyStamped.h>
+#include <rviz_voxelgrid_visuals_msgs/VoxelgridStamped.h>
 #include <rviz/message_filter_display.h>
 
 namespace Ogre
@@ -18,12 +18,12 @@ class FloatProperty;
 class IntProperty;
 }
 
-namespace mps_shape_completion_visualization
+namespace rviz_voxelgrid_visuals
 {
 
 class VoxelGridVisual;
 
-class VoxelGridDisplay: public rviz::MessageFilterDisplay<mps_shape_completion_msgs::OccupancyStamped>
+class VoxelGridDisplay: public rviz::MessageFilterDisplay<rviz_voxelgrid_visuals_msgs::VoxelgridStamped>
 {
 Q_OBJECT
 public:
@@ -50,7 +50,7 @@ private Q_SLOTS:
 
 private:
   // Function to handle an incoming ROS message.
-  void processMessage( const mps_shape_completion_msgs::OccupancyStamped::ConstPtr& msg);
+  void processMessage( const rviz_voxelgrid_visuals_msgs::VoxelgridStamped::ConstPtr& msg);
 
   // Storage for the list of visuals.  It is a circular buffer where
   // data gets popped from the front (oldest) and pushed to the back (newest)
@@ -64,6 +64,6 @@ private:
   rviz::FloatProperty* cutoff_property_;
 };
 
-} // end namespace mps_shape_completion_visualization
+} // end namespace rviz_voxelgrid_visuals
 
 #endif // VOXEL_DISPLAY_H
