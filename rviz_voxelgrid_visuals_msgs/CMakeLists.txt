@@ -49,7 +49,8 @@ find_package(catkin REQUIRED
 add_message_files(
   FILES
   VoxelgridStamped.msg
-#   Message2.msg
+  SparseVoxel.msg
+  SparseVoxelgridStamped.msg
 )
 
 # Generate services in the 'srv' folder
