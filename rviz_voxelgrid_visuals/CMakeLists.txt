@@ -4,9 +4,10 @@ project(rviz_voxelgrid_visuals)
 add_compile_options(-std=c++14)
 
 find_package(catkin REQUIRED
-  rviz_voxelgrid_visuals_msgs
-  rviz
-  roscpp)
+        rviz_voxelgrid_visuals_msgs
+        rviz
+        roscpp
+        std_msgs)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -18,10 +19,9 @@ set(QT_LIBRARIES Qt5::Widgets)
 set(CMAKE_AUTOMOC ON)
 
 set(SRC_FILES
-  src/voxel_display.cpp
-  src/voxel_visual.cpp
-  )
-
+        src/voxel_display.cpp
+        src/voxel_visual.cpp
+        include/rviz_voxelgrid_visuals/conversions.h src/conversions.cpp)
 
 
 catkin_python_setup()
@@ -31,10 +31,10 @@ catkin_python_setup()
 ## catkin specific configuration ##
 ###################################
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES rviz_voxelgrid_visuals
-#  CATKIN_DEPENDS other_catkin_pkg
-#  DEPENDS system_lib
+        INCLUDE_DIRS include
+        LIBRARIES conversions
+        #  CATKIN_DEPENDS other_catkin_pkg
+        #  DEPENDS system_lib
 )
 
 ###########
@@ -44,19 +44,27 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-include
-${catkin_INCLUDE_DIRS}
+        include
+        ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME}
-  ${SRC_FILES}
-  )
+        ${SRC_FILES}
+        )
 
 target_link_libraries(${PROJECT_NAME}
-  ${QT_LIBRARIES}
-  ${catkin_LIBRARES}
-  )
+        ${QT_LIBRARIES}
+        ${catkin_LIBRARES}
+        )
+
+
+add_library(conversions
+        src/conversions.cpp)
+target_link_libraries(conversions
+        ${catkin_LIBRARIES}
+        )
+
 
 
 #############
@@ -64,13 +72,13 @@ target_link_libraries(${PROJECT_NAME}
 #############
 
 install(TARGETS
-  ${PROJECT_NAME}
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+        ${PROJECT_NAME}
+        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        )
 
 install(FILES
-  plugin_description.xml
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+        plugin_description.xml
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 

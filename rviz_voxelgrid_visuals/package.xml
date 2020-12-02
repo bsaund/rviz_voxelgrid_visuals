@@ -52,6 +52,7 @@
   <depend>libqt5-gui</depend>
   <depend>libqt5-widgets</depend>
   <depend>rviz</depend>
+  <depend>std_msgs</depend>
   
   <buildtool_depend>catkin</buildtool_depend>
 
