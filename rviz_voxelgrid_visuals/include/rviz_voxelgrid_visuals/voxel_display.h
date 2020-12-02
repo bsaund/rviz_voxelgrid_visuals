@@ -1,60 +1,55 @@
 #ifndef VOXEL_DISPLAY_H
 #define VOXEL_DISPLAY_H
 
+#include <rviz/message_filter_display.h>
+#include <rviz_voxelgrid_visuals_msgs/VoxelgridStamped.h>
+
 #include <boost/circular_buffer.hpp>
 
-#include <rviz_voxelgrid_visuals_msgs/VoxelgridStamped.h>
-#include <rviz/message_filter_display.h>
-
-namespace Ogre
-{
+namespace Ogre {
 class SceneNode;
 }
 
-namespace rviz
-{
+namespace rviz {
 class ColorProperty;
 class FloatProperty;
 class IntProperty;
-}
+}  // namespace rviz
 
-namespace rviz_voxelgrid_visuals
-{
+namespace rviz_voxelgrid_visuals {
 
 class VoxelGridVisual;
 
-class VoxelGridDisplay: public rviz::MessageFilterDisplay<rviz_voxelgrid_visuals_msgs::VoxelgridStamped>
-{
-Q_OBJECT
-public:
+class VoxelGridDisplay : public rviz::MessageFilterDisplay<rviz_voxelgrid_visuals_msgs::VoxelgridStamped> {
+  Q_OBJECT
+ public:
   // Constructor.  pluginlib::ClassLoader creates instances by calling
   // the default constructor, so make sure you have one.
   VoxelGridDisplay();
-  virtual ~VoxelGridDisplay();
+  ~VoxelGridDisplay() override;
 
   // Overrides of protected virtual functions from Display.  As much
   // as possible, when Displays are not enabled, they should not be
   // subscribed to incoming data and should not show anything in the
   // 3D view.  These functions are where these connections are made
   // and broken.
-protected:
-  virtual void onInitialize();
+ protected:
+  void onInitialize() override;
 
   // A helper to clear this display back to the initial state.
-  virtual void reset();
+  void reset() override;
 
   // These Qt slots get connected to signals indicating changes in the user-editable properties.
-private Q_SLOTS:
+ private Q_SLOTS:
   void updateColorAndAlpha();
 
-
-private:
+ private:
   // Function to handle an incoming ROS message.
-  void processMessage( const rviz_voxelgrid_visuals_msgs::VoxelgridStamped::ConstPtr& msg);
+  void processMessage(const rviz_voxelgrid_visuals_msgs::VoxelgridStamped::ConstPtr& msg) override;
 
   // Storage for the list of visuals.  It is a circular buffer where
   // data gets popped from the front (oldest) and pushed to the back (newest)
-  boost::shared_ptr<VoxelGridVisual > visual_;
+  boost::shared_ptr<VoxelGridVisual> visual_;
 
   // User-editable property variables.
   rviz::BoolProperty* hide_property_;
@@ -64,6 +59,6 @@ private:
   rviz::FloatProperty* cutoff_property_;
 };
 
-} // end namespace rviz_voxelgrid_visuals
+}  // end namespace rviz_voxelgrid_visuals
 
-#endif // VOXEL_DISPLAY_H
+#endif  // VOXEL_DISPLAY_H
