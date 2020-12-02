@@ -1,4 +1,5 @@
-#include "rviz_voxelgrid_visuals/voxel_visual.h"
+#include "voxel_visual.h"
+
 #include <std_msgs/Float32MultiArray.h>
 
 namespace rviz_voxelgrid_visuals {

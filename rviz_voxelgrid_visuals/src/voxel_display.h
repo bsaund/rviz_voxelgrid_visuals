@@ -2,12 +2,14 @@
 #define VOXEL_DISPLAY_H
 
 #include <rviz/message_filter_display.h>
-#include <rviz_voxelgrid_visuals_msgs/VoxelgridStamped.h>
-#include <boost/circular_buffer.hpp>
 #include <rviz/properties/color_property.h>
 #include <rviz/properties/float_property.h>
 #include <rviz/properties/int_property.h>
-#include <rviz_voxelgrid_visuals/voxel_visual.h>
+#include <rviz_voxelgrid_visuals_msgs/VoxelgridStamped.h>
+
+#include <boost/circular_buffer.hpp>
+
+#include "voxel_visual.h"
 
 namespace rviz_voxelgrid_visuals {
 

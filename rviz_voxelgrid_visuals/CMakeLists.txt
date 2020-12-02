@@ -23,7 +23,6 @@ set(SRC_FILES
         src/voxel_visual.cpp
         include/rviz_voxelgrid_visuals/conversions.h src/conversions.cpp)
 
-
 catkin_python_setup()
 
 

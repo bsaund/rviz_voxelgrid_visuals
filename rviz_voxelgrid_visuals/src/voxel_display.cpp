@@ -1,4 +1,4 @@
-#include "rviz_voxelgrid_visuals/voxel_display.h"
+#include "voxel_display.h"
 
 #include <OGRE/OgreSceneManager.h>
 #include <OGRE/OgreSceneNode.h>
@@ -7,7 +7,7 @@
 #include <rviz/visualization_manager.h>
 #include <tf/transform_listener.h>
 
-#include "rviz_voxelgrid_visuals/voxel_visual.h"
+#include "voxel_visual.h"
 
 namespace rviz_voxelgrid_visuals {
 
