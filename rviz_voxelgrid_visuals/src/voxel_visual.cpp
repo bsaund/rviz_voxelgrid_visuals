@@ -69,7 +69,7 @@ namespace rviz_voxelgrid_visuals
             {
                 for(int k=0; k<dims[2].size; k++)
                 {
-                    float val = data[data_offset + dims[1].stride * i + dims[2].stride * j + k];
+                    float val = data[data_offset + dims[0].stride * i + dims[1].stride * j + dims[2].stride * k];
                     if(val < threshold_)
                     {
                         continue;
