@@ -1,9 +1,10 @@
 # import rospy
 from rviz_voxelgrid_visuals_msgs.msg import VoxelgridStamped
 from visualization_msgs.msg import Marker, MarkerArray
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import Point, Point32
 from std_msgs.msg import ColorRGBA
 from std_msgs.msg import Float32MultiArray, MultiArrayDimension
+from sensor_msgs.msg import PointCloud
 import numpy as np
 
 
@@ -38,6 +39,29 @@ def vox_to_voxelgrid_stamped(voxel_grid, scale, frame_id, dim=None, origin=(0, 0
     msg.origin.x = origin[0]
     msg.origin.y = origin[1]
     msg.origin.z = origin[2]
+    return msg
+
+
+def vox_to_pointcloud(voxel_grid, scale=1.0, origin=(0, 0, 0), threshold=0.5):
+    """
+    Converts a 3D voxelgrid into a 3D set of points for each voxel with value above threshold
+    @param voxelgrid: (opt 1 x) X x Y x Z (opt x 1) voxelgrid
+    @param scale:
+    @param origin: origin in voxel coorindates
+    @param threshold:
+    @return:
+    """
+    pts = np.argwhere(np.squeeze(voxel_grid) > threshold)
+    return (np.array(pts) - origin + 0.5) * scale
+
+
+def vox_to_pointcloud_msg(voxel_grid, scale=1.0, frame="world", origin=(0, 0, 0), threshold=0.5):
+    msg = PointCloud()
+    msg.header.frame_id = frame
+    for pt in vox_to_pointcloud(voxel_grid, scale=scale, origin=origin, threshold=threshold):
+        pt_msg = Point()
+        pt_msg.x, pt_msg.y, pt_msg.z = pt
+        msg.points.append(pt_msg)
     return msg
 
 
