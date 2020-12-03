@@ -2,9 +2,10 @@
 from rviz_voxelgrid_visuals_msgs.msg import VoxelgridStamped
 from visualization_msgs.msg import Marker, MarkerArray
 from geometry_msgs.msg import Point, Point32
-from std_msgs.msg import ColorRGBA
+from std_msgs.msg import ColorRGBA, Header
 from std_msgs.msg import Float32MultiArray, MultiArrayDimension
-from sensor_msgs.msg import PointCloud
+from sensor_msgs.msg import PointCloud2, PointField
+from sensor_msgs import point_cloud2
 import numpy as np
 
 
@@ -55,14 +56,16 @@ def vox_to_pointcloud(voxel_grid, scale=1.0, origin=(0, 0, 0), threshold=0.5):
     return (np.array(pts) - origin + 0.5) * scale
 
 
-def vox_to_pointcloud_msg(voxel_grid, scale=1.0, frame="world", origin=(0, 0, 0), threshold=0.5):
-    msg = PointCloud()
-    msg.header.frame_id = frame
-    for pt in vox_to_pointcloud(voxel_grid, scale=scale, origin=origin, threshold=threshold):
-        pt_msg = Point()
-        pt_msg.x, pt_msg.y, pt_msg.z = pt
-        msg.points.append(pt_msg)
-    return msg
+def vox_to_pointcloud2_msg(voxel_grid, scale=1.0, frame="world", origin=(0, 0, 0), threshold=0.5):
+    header = Header(frame_id=frame)
+
+    pts = [pt for pt in vox_to_pointcloud(voxel_grid, scale=scale, origin=origin, threshold=threshold)]
+
+    fields = [PointField('x', 0, PointField.FLOAT32, 1),
+              PointField('y', 4, PointField.FLOAT32, 1),
+              PointField('z', 8, PointField.FLOAT32, 1),
+              ]
+    return point_cloud2.create_cloud(header, fields, pts)
 
 
 def voxelgrid_stamped_to_cubelist(occupancy_msg, color):
