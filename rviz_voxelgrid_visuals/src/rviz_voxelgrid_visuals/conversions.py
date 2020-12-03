@@ -12,9 +12,9 @@ def vox_to_float_array(voxel_grid, dim=None):
         dim = voxel_grid.shape[0]
     out_msg = Float32MultiArray()
     out_msg.data = voxel_grid.astype(np.float32).flatten().tolist()
-    out_msg.layout.dim.append(MultiArrayDimension(label='x', size=dim, stride=dim*dim*dim))
-    out_msg.layout.dim.append(MultiArrayDimension(label='y', size=dim, stride=dim*dim))
-    out_msg.layout.dim.append(MultiArrayDimension(label='z', size=dim, stride=dim))
+    out_msg.layout.dim.append(MultiArrayDimension(label='x', size=dim, stride=1))
+    out_msg.layout.dim.append(MultiArrayDimension(label='y', size=dim, stride=dim))
+    out_msg.layout.dim.append(MultiArrayDimension(label='z', size=dim, stride=dim * dim))
     return out_msg
 
 
@@ -22,7 +22,7 @@ def msg_to_vox(msg):
     return np.reshape(msg.data, tuple(d.size for d in msg.layout.dim))
 
 
-def vox_to_voxelgrid_stamped(voxel_grid, scale, frame_id, dim=None, origin=(0,0,0)):
+def vox_to_voxelgrid_stamped(voxel_grid, scale, frame_id, dim=None, origin=(0, 0, 0)):
     """
     @param voxel_grid: 3D Cubic Voxelgrid in either numpy or tensorflow
     @param scale: side dimension of each voxel
@@ -57,7 +57,6 @@ def voxelgrid_stamped_to_cubelist(occupancy_msg, color):
         color.g = 0.5
         color.b = 0.5
 
-    
     m = Marker()
     m.header = occupancy_msg.header
 
@@ -70,7 +69,7 @@ def voxelgrid_stamped_to_cubelist(occupancy_msg, color):
     m.scale.x = scale
     m.scale.y = scale
     m.scale.z = scale
-    
+
     dim = occupancy_msg.occupancy.layout.dim
     data_offset = occupancy_msg.occupancy.layout.data_offset
 
@@ -81,9 +80,9 @@ def voxelgrid_stamped_to_cubelist(occupancy_msg, color):
                 if val < 0.5:
                     continue
                 p = Point()
-                p.x = scale/2 + i*scale
-                p.y = scale/2 + j*scale
-                p.z = scale/2 + k*scale
+                p.x = scale / 2 + i * scale
+                p.y = scale / 2 + j * scale
+                p.z = scale / 2 + k * scale
                 m.points.append(p)
-                
+
     return m
