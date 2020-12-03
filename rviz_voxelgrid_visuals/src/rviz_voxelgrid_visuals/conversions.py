@@ -12,9 +12,9 @@ def vox_to_float_array(voxel_grid, dim=None):
         dim = voxel_grid.shape[0]
     out_msg = Float32MultiArray()
     out_msg.data = voxel_grid.astype(np.float32).flatten().tolist()
-    out_msg.layout.dim.append(MultiArrayDimension(label='x', size=dim, stride=1))
+    out_msg.layout.dim.append(MultiArrayDimension(label='x', size=dim, stride=dim * dim))
     out_msg.layout.dim.append(MultiArrayDimension(label='y', size=dim, stride=dim))
-    out_msg.layout.dim.append(MultiArrayDimension(label='z', size=dim, stride=dim * dim))
+    out_msg.layout.dim.append(MultiArrayDimension(label='z', size=dim, stride=1))
     return out_msg
 
 
