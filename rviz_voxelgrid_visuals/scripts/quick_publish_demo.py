@@ -3,6 +3,7 @@ import rospy
 import numpy as np
 from rviz_voxelgrid_visuals import conversions
 from rviz_voxelgrid_visuals_msgs.msg import VoxelgridStamped
+from sensor_msgs.msg import PointCloud2
 import pickle
 import rospkg
 
@@ -16,9 +17,10 @@ if __name__ == "__main__":
     rospy.init_node("quick_voxelgrid_publisher_demo")
     pub_1 = rospy.Publisher('/voxelgrid_1', VoxelgridStamped, queue_size=1)
     pub_2 = rospy.Publisher('/voxelgrid_2', VoxelgridStamped, queue_size=1)
+    point_pub = rospy.Publisher('/pointcloud', PointCloud2, queue_size=1)
 
     i = 1
-    while pub_1.get_num_connections() == 0 or pub_2.get_num_connections() == 0:
+    while pub_1.get_num_connections() == 0 or pub_2.get_num_connections() == 0 or point_pub.get_num_connections() == 0:
         i += 1
         if i % 10 == 0:
             rospy.loginfo("Waiting for publishers to connect")
@@ -37,3 +39,7 @@ if __name__ == "__main__":
         vg_2 = pickle.load(f, encoding='latin1')
     pub_2.publish(conversions.vox_to_voxelgrid_stamped(vg_2, scale=0.02, frame_id='world',
                                                        origin=(-.64, -.64, 0)))
+
+    point_pub.publish(conversions.vox_to_pointcloud2_msg(vg_2, scale=0.02, frame='world', origin=(-.64, -.64, 0),
+                                                         density_factor=2))
+    rospy.sleep(1)
