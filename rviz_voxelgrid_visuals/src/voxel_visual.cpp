@@ -117,10 +117,6 @@ void SparseVoxelGridVisual::updatePointCloud() {
     return;
   }
 
-  if (latest_msg.voxels.empty()) {
-    return;
-  }
-
   double scale = latest_msg.scale;
   voxel_grid_points_->setDimensions((float)scale, (float)scale, (float)scale);
 

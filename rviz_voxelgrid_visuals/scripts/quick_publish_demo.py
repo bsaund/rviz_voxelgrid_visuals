@@ -43,3 +43,9 @@ if __name__ == "__main__":
     point_pub.publish(conversions.vox_to_pointcloud2_msg(vg_2, scale=0.02, frame='world', origin=(-.64, -.64, 0),
                                                          density_factor=2))
     rospy.sleep(1)
+    vg_empty = np.zeros((64, 64, 64))
+    print(f"Clearing voxelgrid")
+    pub_1.publish(conversions.vox_to_voxelgrid_stamped(vg_empty,
+                                                       scale=0.01,  # Each voxel is a 1cm cube
+                                                       frame_id='world',  # In frame "world", same as rviz fixed frame
+                                                       origin=[-32 * 0.01] * 3))
