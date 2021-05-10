@@ -83,7 +83,7 @@ void DenseVoxelGridVisual::updatePointCloud() {
 
         if (latest_msg.has_color) {
           p.setColor(latest_msg.color.r, latest_msg.color.g, latest_msg.color.b,
-                     std::min(val * latest_msg.color.a, 1.0f));
+                     std::min(val * latest_msg.color.a * a_, 1.0f));
         } else {
           p.setColor(r_, g_, b_, std::min(val * a_, 1.0f));
         }
