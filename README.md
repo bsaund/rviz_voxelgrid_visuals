@@ -17,8 +17,8 @@ This adds a new display-type to RViz which enables voxelgrid messages
 # Getting started
 
 Prereqs:
-- ROS, with RViz
-- python 2 (not tested but might work with python 3)
+- ROS, with RViz. Tested on noetic
+- python 3 (maybe 2 still works?)
 
 Installation:
 1. Clone this repo into your catkin workspace
