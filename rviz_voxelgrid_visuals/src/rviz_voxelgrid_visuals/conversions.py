@@ -43,6 +43,18 @@ def vox_to_voxelgrid_stamped(voxel_grid, scale, frame_id, dim=None, origin=(0, 0
     return msg
 
 
+def get_origin_in_voxel_coordinates(origin_in_voxel_coordinates, scale):
+    """
+    Transforms the vector from origin to voxelgrid to the "origin_in_voxel_coordinates" required by some function
+    Args:
+        origin_in_voxel_coordinates:
+        scale:
+
+    Returns:
+    """
+    return -np.array(origin_in_voxel_coordinates) / scale
+
+
 def vox_to_pointcloud(voxel_grid, scale=1.0, origin=(0, 0, 0), threshold=0.5, density_factor=1):
     """
     Converts a 3D voxelgrid into a 3D set of points for each voxel with value above threshold
@@ -67,11 +79,15 @@ def vox_to_pointcloud(voxel_grid, scale=1.0, origin=(0, 0, 0), threshold=0.5, de
 
 
 def vox_to_pointcloud2_msg(voxel_grid, scale=1.0, frame="world", origin=(0, 0, 0), threshold=0.5, density_factor=1):
-    header = Header(frame_id=frame)
 
     pts = [pt for pt in vox_to_pointcloud(voxel_grid, scale=scale, origin=origin, threshold=threshold,
                                           density_factor=density_factor)]
 
+    return points_to_pointcloud2_msg(pts, frame)
+
+
+def points_to_pointcloud2_msg(pts, frame):
+    header = Header(frame_id=frame)
     fields = [PointField('x', 0, PointField.FLOAT32, 1),
               PointField('y', 4, PointField.FLOAT32, 1),
               PointField('z', 8, PointField.FLOAT32, 1),
@@ -80,7 +96,7 @@ def vox_to_pointcloud2_msg(voxel_grid, scale=1.0, frame="world", origin=(0, 0, 0
 
 
 def pointcloud2_msg_to_vox(msg, scale=1.0, frame="world", origin=(0,0,0), shape=(64,64,64)):
-    point_cloud2.read_points(msg, field_names=('x', 'y', 'z'))
+    # point_cloud2.read_points(msg, field_names=('x', 'y', 'z'))
     vg = np.zeros(shape)
     for p in point_cloud2.read_points(msg, field_names=('x', 'y', 'z')):
         s = [int(c / scale + o) for c, o in zip(p, origin)]
