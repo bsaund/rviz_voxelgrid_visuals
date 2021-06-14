@@ -43,16 +43,16 @@ def vox_to_voxelgrid_stamped(voxel_grid, scale, frame_id, dim=None, origin=(0, 0
     return msg
 
 
-def get_origin_in_voxel_coordinates(origin_in_voxel_coordinates, scale):
+def get_origin_in_voxel_coordinates(origin_to_voxelgrid, scale):
     """
     Transforms the vector from origin to voxelgrid to the "origin_in_voxel_coordinates" required by some function
     Args:
-        origin_in_voxel_coordinates:
+        origin_to_voxelgrid:
         scale:
 
     Returns:
     """
-    return -np.array(origin_in_voxel_coordinates) / scale
+    return -np.array(origin_to_voxelgrid) / scale
 
 
 def vox_to_pointcloud(voxel_grid, scale=1.0, origin=(0, 0, 0), threshold=0.5, density_factor=1):
